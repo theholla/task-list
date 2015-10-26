@@ -18,14 +18,18 @@ public class Task extends Model {
     // provides two-way mapping to the database
     @Column(name = "Description")
     private String mDescription;
+    // Adding this is the first step of making a many:many db relationship
+    @Column(name = "Category")
+    private Category mCategory;
 
     public Task() {
         super();
     }
 
-    public Task(String description) {
+    public Task(String description, Category category) {
         super();
         mDescription = description;
+        mCategory = category;
     }
 
     public String getDescription() {

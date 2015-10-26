@@ -19,7 +19,8 @@
         </activity>
         <!--should update this database version if we update db schema-->
         <meta-data android:name="AA_DB_NAME" android:value="Task.db"/>
-        <meta-data android:name="AA_DB_VERSION" android:value="1"/>
+        <!-- 1:many, version 1, many:many, version 2 -->
+        <meta-data android:name="AA_DB_VERSION" android:value="2"/>
     </application>
 
 </manifest>
