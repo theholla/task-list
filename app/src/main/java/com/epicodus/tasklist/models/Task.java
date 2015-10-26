@@ -28,11 +28,11 @@ public class Task extends Model {
         mDescription = description;
     }
 
-    public String getmDescription() {
+    public String getDescription() {
         return mDescription;
     }
 
-    public void setmDescription(String description) {
+    public void setDescription(String description) {
         mDescription = description;
     }
 

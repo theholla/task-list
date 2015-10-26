@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.epicodus.tasklist.R;
+import com.epicodus.tasklist.models.Task;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,10 @@ public class MainActivity extends ListActivity {
         mNewTaskText = (EditText) findViewById(R.id.newTask);
 
         mTasks = new ArrayList<String>();
+        for ( Task task : Task.all() ) {
+            mTasks.add(task.getDescription());
+        }
+
         mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mTasks);
         // use this adapter to populate the list:
         setListAdapter(mAdapter);
@@ -42,8 +47,10 @@ public class MainActivity extends ListActivity {
     }
 
     private void addTask() {
-        String newTask = mNewTaskText.getText().toString();
-        mTasks.add(newTask);
+        String description = mNewTaskText.getText().toString();
+        Task newTask = new Task(description);
+        newTask.save();
+        mTasks.add(description);
         // signal to adapter that a task is added so it can rerender the ListView
         mAdapter.notifyDataSetChanged();
     }
