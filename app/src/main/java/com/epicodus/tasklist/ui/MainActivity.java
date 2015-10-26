@@ -1,24 +1,24 @@
 package com.epicodus.tasklist.ui;
 
 import android.app.ListActivity;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.epicodus.tasklist.R;
+import com.epicodus.tasklist.models.Category;
 import com.epicodus.tasklist.models.Task;
 
 import java.util.ArrayList;
 
 public class MainActivity extends ListActivity {
-    private ArrayList<String> mTasks;
-    private Button mNewTaskutton;
-    private EditText mNewTaskText;
+    private ArrayList<String> mCategories;
+    private Button mNewCategoryButton;
+    private EditText mNewCategoryText;
     private ArrayAdapter<String> mAdapter;
 
     @Override
@@ -26,32 +26,40 @@ public class MainActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mNewTaskutton = (Button) findViewById(R.id.newTaskButton);
-        mNewTaskText = (EditText) findViewById(R.id.newTask);
+        mNewCategoryButton = (Button) findViewById(R.id.newTaskButton);
+        mNewCategoryText = (EditText) findViewById(R.id.newTask);
 
-        mTasks = new ArrayList<String>();
-        for ( Task task : Task.all() ) {
-            mTasks.add(task.getDescription());
+        mCategories = new ArrayList<String>();
+        for ( Category category : Category.all() ) {
+            mCategories.add(category.getName());
         }
 
-        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mTasks);
-        // use this adapter to populate the list:
+
+        mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mCategories);
         setListAdapter(mAdapter);
 
-        mNewTaskutton.setOnClickListener(new View.OnClickListener() {
+        mNewCategoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addTask();
+                addCategory();
             }
         });
     }
 
-    private void addTask() {
-        String description = mNewTaskText.getText().toString();
-        Task newTask = new Task(description);
-        newTask.save();
-        mTasks.add(description);
-        // signal to adapter that a task is added so it can rerender the ListView
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        String thisCategoryName = mCategories.get(position);
+        Intent intent = new Intent(this, CategoryActivity.class);
+        intent.putExtra("categoryName", thisCategoryName);
+        startActivity(intent);
+    }
+
+    private void addCategory() {
+        String name =  mNewCategoryText.getText().toString();
+        Category category = new Category(name);
+        category.save();
+        mCategories.add(name);
         mAdapter.notifyDataSetChanged();
     }
 

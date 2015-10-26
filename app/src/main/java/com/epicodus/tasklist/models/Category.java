@@ -26,7 +26,7 @@ public class Category extends Model {
         mName = name;
     }
 
-    public String getmName() {
+    public String getName() {
         return mName;
     }
 
@@ -40,5 +40,12 @@ public class Category extends Model {
 
     public List<Task> tasks() {
         return getMany(Task.class, "Category");
+    }
+
+    public static Category find(String name) {
+        return new Select()
+                .from(Category.class)
+                .where("Name = ?", name)
+                .executeSingle();
     }
 }

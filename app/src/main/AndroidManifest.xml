@@ -17,10 +17,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--should update this database version if we update db schema-->
-        <meta-data android:name="AA_DB_NAME" android:value="Task.db"/>
+        <!-- should update this database version if we update db schema -->
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="Task.db" />
         <!-- 1:many, version 1, many:many, version 2 -->
-        <meta-data android:name="AA_DB_VERSION" android:value="2"/>
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="2" />
+
+        <activity
+            android:name=".ui.CategoryActivity"
+            android:label="@string/title_activity_category"
+            android:parentActivityName=".ui.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.epicodus.tasklist.ui.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
