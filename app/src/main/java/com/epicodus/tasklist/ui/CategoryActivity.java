@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.activeandroid.query.Select;
 import com.epicodus.tasklist.R;
@@ -50,10 +51,21 @@ public class CategoryActivity extends ListActivity {
         });
     }
 
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        String taskInDatabase = mAdapter.getItem(position);
+        Task taskToDelete = Task.find(taskInDatabase);
+        taskToDelete.delete();
+        mAdapter.remove(taskInDatabase);
+        mAdapter.notifyDataSetChanged();
+    }
+
     private void addTask() {
         String description = mNewTaskText.getText().toString();
         Task newTask = new Task(description, mCategory);
         newTask.save();
+        mNewTaskText.setText("");
         mTasks.add(description);
         // signal to adapter that a task is added so it can rerender the ListView
         mAdapter.notifyDataSetChanged();

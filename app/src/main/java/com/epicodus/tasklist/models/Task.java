@@ -40,6 +40,13 @@ public class Task extends Model {
         mDescription = description;
     }
 
+    public static Task find(String description) {
+        return new Select()
+                .from(Task.class)
+                .where("Description = ?", description)
+                .executeSingle();
+    }
+
     public static List<Task> all() {
         // Active Android translates this query into SQL, sends data, converts into objects, returns
         return new Select().from(Task.class).execute();

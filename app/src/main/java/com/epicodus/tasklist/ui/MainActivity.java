@@ -61,6 +61,7 @@ public class MainActivity extends ListActivity {
         category.save();
         mCategories.add(name);
         mAdapter.notifyDataSetChanged();
+        mNewCategoryText.setText("");
     }
 
 }
